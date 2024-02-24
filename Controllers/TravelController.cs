@@ -17,10 +17,10 @@ namespace RailWaySystem.Controllers
             new Travel{Id=3, FromLocation="ahsa", ToLocation="ryadh", Duration="3:30", Price=85.99},
         };
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public Travel[] Get(int id){
             
-            Travel[] travels = Travels.ToArray();
+            Travel[] travels = Travels.Where(i => i.Id == id).ToArray();
             return travels;
     }
     }
