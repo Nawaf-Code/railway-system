@@ -1,30 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Button } from 'reactstrap';
+const RankTravels = ({travels}) => {
 
-const RankTravels = () => {
-    const [travels, setTravels] = useState([]);
-
-    const id = 2;
-
-    useEffect(() => {
-        fetch(`travel/${id}`)
-            .then((results) => results.json())
-            .then(data => {
-                setTravels(data);
-            });
-    }, []);
-
+const handleUserBook = (id) =>{
+    console.log("the user want", id);
+}
     return (
-        <main>
-            {
-                travels.length > 0 ? (
-                    travels.map((travel) => (
-                        <h3 key={travel.id}>{travel.fromLocation}</h3>
-                    ))
-                ) : (
-                    <h3>loading...</h3>
-                )
-            }
-        </main>
+        <div className="travel-schedule">
+
+            {(travels.length > 0) && (
+                <table>
+                <thead>
+                  <tr>
+                    <th>Train Number</th>
+                    <th>Departure Time</th>
+                    <th>Arrival Time</th>
+                    <th>Duration</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Price</th>
+                    <th>{}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {travels.map((travel) => (
+
+                    <tr key={travel.id}>
+                      <td>{travel.travelNumber}</td>
+                      <td>{travel.departureTime}</td>
+                      <td>{travel.timeArrival}</td>
+                      <td>{travel.duration}</td>
+                      <td>{travel.origin}</td>
+                      <td>{travel.destination}</td>
+                      <td>{travel.price} SAR</td>
+                      <td>
+                      <Button style={{backgroundColor: '#778899'}} size="sm" onClick={() => handleUserBook(travel.id)}>Book the travel </Button>
+                      </td>
+                    </tr>
+                ))}
+                </tbody>
+                </table>
+            )}
+
+        </div>
+        
     );
 };
 

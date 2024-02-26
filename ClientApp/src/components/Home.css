@@ -1,0 +1,33 @@
+.grpbutton{
+    justify-content: space-evenly;
+}
+
+/* TrainSchedule.css */
+.train-schedule {
+    font-family: sans-serif;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+.DemoContainer,
+.DemoContainer .DatePicker-input { /* Adjust selectors as needed */
+  color: white;
+}
+.DemoContainer {
+  height: 50px;
+}
+  

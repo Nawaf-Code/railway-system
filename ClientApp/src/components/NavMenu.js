@@ -12,19 +12,19 @@ const NavMenu = () => {
 
   return (
     <header>
-      <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-        <NavbarBrand tag={Link} to="/">Railway System</NavbarBrand>
+      <Navbar className="navbar-expand-sm  " container light>
+        <NavbarBrand tag={Link} to="/" className='navlogo'>Railway System</NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
           <ul className="navbar-nav flex-grow">
             <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+              <NavLink tag={Link} className="navtext" to="/">Home |</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+              <NavLink tag={Link} className="navtext" to="/fetch-data">Sign in |</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} className="text-dark" to="/rank-travels">Rank travels</NavLink>
+              <NavLink tag={Link} className="navtext" to="/rank-travels">Create Account</NavLink>
             </NavItem>
           </ul>
         </Collapse>
