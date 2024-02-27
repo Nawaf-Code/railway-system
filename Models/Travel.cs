@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace RailWaySystem.ClientApp.Models
 {
-    public class Travel
+    public class Travels
     {
         public int Id {get; set;}
-        //public DateOnly Date {get; set;}
+        public string? TrainNumber {get; set;}
+        public string? DateOfTravel {get; set;}
         public string? Origin {get; set;}
         public string? Destination {get; set;}
         public string? DepartureTime {get; set;}
