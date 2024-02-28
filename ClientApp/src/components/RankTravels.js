@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'reactstrap';
-const RankTravels = ({travels}) => {
+import axios from 'axios';
+const RankTravels = ({travels, userData}) => {
 
-const handleUserBook = (id) =>{
-    console.log("the user want", id);
-}
+  const handleUserBook = async (trainNumber, dateOfTravel, origin, destination, departureTime, timeArrival, duration) => {
+    if (userData !== null) {
+      try {
+        const response = await axios.post(`/usersBooking/${userData.id}/${trainNumber}/${dateOfTravel}/${origin}/${destination}/${departureTime}/${timeArrival}/${duration}`);
+        // setMessage(response.data);
+  
+      } catch (error) {
+        // setMessage('An error occurred while creating the booking.');
+        // You can handle the error here
+      }
+    } else {
+      console.log(userData);
+    }
+  };
     return (
         <div className="travel-schedule">
 
@@ -26,7 +38,7 @@ const handleUserBook = (id) =>{
                 {travels.map((travel) => (
 
                     <tr key={travel.id}>
-                      <td>{travel.travelNumber}</td>
+                      <td>{travel.trainNumber}</td>
                       <td>{travel.departureTime}</td>
                       <td>{travel.timeArrival}</td>
                       <td>{travel.duration}</td>
@@ -34,7 +46,14 @@ const handleUserBook = (id) =>{
                       <td>{travel.destination}</td>
                       <td>{travel.price} SAR</td>
                       <td>
-                      <Button style={{backgroundColor: '#778899'}} size="sm" onClick={() => handleUserBook(travel.id)}>Book the travel </Button>
+                      <Button style={{backgroundColor: '#778899'}} size="sm" onClick={() => handleUserBook(
+                        travel.trainNumber,
+                        travel.dateOfTravel,
+                        travel.origin,
+                        travel.destination,
+                        travel.departureTime,
+                        travel.timeArrival,
+                        travel.duration)}>Book the travel </Button>
                       </td>
                     </tr>
                 ))}

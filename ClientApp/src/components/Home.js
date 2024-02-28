@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
 import { IoLocationOutline } from "react-icons/io5";
-import TextField from '@mui/material/TextField'; 
 import { GrSchedulePlay } from "react-icons/gr";
 import RankTravels from './RankTravels';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DemoItem } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import "./Home.css"
 import {
   Dropdown,
   DropdownToggle,
-  DropdownMenu,
+  DropdownMenu, Input,
   DropdownItem, Button
 } from 'reactstrap';
 
 
 
-const Home = ({ ...args }) => {
+const Home = ({userStatus, userData}) => {
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const [dropdownOpen2, setDropdownOpen2] = useState(false);
   const [origin, setOrigin] = useState('');
@@ -27,9 +21,15 @@ const Home = ({ ...args }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs('2024-03-04'));
   const [travels, setTravels] = useState([]);
 
-//console.log("month: ",selectedDate.get('month')+1);
-//console.log("day: ",selectedDate.get('date'));
-//console.log("year: ",selectedDate.get('year'));
+  const handleDateChange = (event) => {
+    const newDate = dayjs(event.target.value);
+    setSelectedDate(newDate);
+  };
+console.log("month: ",selectedDate.get('month')+1);
+console.log("day: ",selectedDate.get('date'));
+console.log("year: ",selectedDate.get('year'));
+
+
 
   const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
   const toggle2 = () => setDropdownOpen2((prevState) => !prevState);
@@ -43,9 +43,7 @@ const Home = ({ ...args }) => {
   }
 
   // Function to handle date picker value change
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  }
+
 
   const handleGetSchedule = () => {
     console.log(origin, destination)
@@ -71,6 +69,10 @@ const Home = ({ ...args }) => {
 
   return (
     <div>
+      <div className="train-schedule">
+      {console.log('status from home:', userStatus)}
+      <p>Our <span className="highlight">Schedule</span></p>
+</div>
       <div className="d-flex p-5 grpbutton">
       <Dropdown isOpen={dropdownOpen1} toggle={toggle1} direction="down">
   <DropdownToggle caret size="lg" style={{ backgroundColor: '#778899', minWidth: '256px' }}>
@@ -96,17 +98,16 @@ const Home = ({ ...args }) => {
   </DropdownMenu>
 </Dropdown>
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']} sx={{ paddingTop: '0', borderRadius: '20px solid' }}>
-        <DemoItem label="Select Travel Date">
-          <DatePicker
-            value={selectedDate}
-            onChange={handleDateChange}
-            textField={(props) => <TextField {...props} />} 
-          />
-        </DemoItem>
-      </DemoContainer>
-    </LocalizationProvider>
+<div className='dateinput'>
+<Input
+        bsSize="lg"
+        type="date"
+        style={{ backgroundColor: '#778899', minWidth: '256px', color: 'white' }}
+        value={selectedDate.format('YYYY-MM-DD')}
+        onChange={handleDateChange}
+      />
+</div>
+
 
 
     <Button
@@ -118,7 +119,7 @@ const Home = ({ ...args }) => {
         </Button>
     </div>
 
-    <RankTravels travels={travels} />
+    <RankTravels travels={travels} userData={userData}/>
     </div>
   );
 };

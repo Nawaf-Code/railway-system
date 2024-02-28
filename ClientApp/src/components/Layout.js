@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Container } from 'reactstrap';
 import NavMenu from './NavMenu';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, userStatus, updateUserStatus, setUserInfo }) => {
+
   return (
     <div>
-      <NavMenu />
-      <Container tag="main">
-        {children}
-      </Container>
+        <NavMenu userStatus={userStatus} updateUserStatus={updateUserStatus} setUserInfo={setUserInfo}/>
+        <Container tag="main">
+            {children}
+        </Container>
     </div>
-  );
+);
 };
 
 Layout.displayName = 'Layout';

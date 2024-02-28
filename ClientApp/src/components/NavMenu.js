@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import './NavMenu.css';
 
-const NavMenu = () => {
+const NavMenu = ({userStatus, updateUserStatus, setUserInfo}) => {
   const [collapsed, setCollapsed] = useState(true);
-
+  const [isAuth, setIsAuth] = useState(false);
   const toggleNavbar = () => {
     setCollapsed(!collapsed);
   };
 
+  const handleLogout = () =>{
+    updateUserStatus("invalid");
+    setUserInfo(null);
+
+    return <Navigate to='/' />
+  
+  }
+  console.log("userStatus from nav menu: ",userStatus);
   return (
     <header>
       <Navbar className="navbar-expand-sm  " container light>
@@ -21,10 +29,20 @@ const NavMenu = () => {
               <NavLink tag={Link} className="navtext" to="/">Home |</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} className="navtext" to="/fetch-data">Sign in |</NavLink>
+              {(userStatus === "valid")? (
+                <NavLink tag={Link} className="navtext" to="/bookings">Your Bookings |</NavLink>
+              ):(
+                <NavLink tag={Link} className="navtext" to="/sign-in">Sign in |</NavLink>
+                
+              )}
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} className="navtext" to="/rank-travels">Create Account</NavLink>
+              {(userStatus === "valid")? (
+                <NavLink tag={Link} className="navtext" to="/" onClick={handleLogout}>Log out</NavLink>
+              ):(
+                <NavLink tag={Link} className="navtext" to="/create-account">Create Account</NavLink>
+              )}
+              
             </NavItem>
           </ul>
         </Collapse>

@@ -1,0 +1,17 @@
+.train-schedule {
+    text-align: center; /* Center align the text */
+    font-family: Arial, sans-serif; /* Choose a font */
+    font-size: 2rem; 
+    font-weight: bold;
+    margin-top: 35px;
+    /* Add other styles as needed, such as color, font weight, etc. */
+  }
+  .highlight {
+    background-color: rgb(211, 177, 83); 
+    border-radius: 5px;
+    padding: 5px 5px;
+  }
+
+  .signform{
+    max-width: 80px;
+  }

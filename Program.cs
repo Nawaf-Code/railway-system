@@ -1,8 +1,26 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using RailWaySystem.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<TravelContext>(
+    options=>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Travel"))
+);
+
+builder.Services.AddDbContext<UsersBookingContext>(
+    options=>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UsersBooking"))
+);
+
+builder.Services.AddDbContext<UserContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("User"))
+);
+
 
 var app = builder.Build();
 
@@ -25,3 +43,5 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+// cd code/dotnet-projects/RailWaySystem
