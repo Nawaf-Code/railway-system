@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RailWaySystem.Data;
-using RailWaySystem.Models;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
+using RailWaySystem.Models;
+using RailWaySystem.Services;
 
 namespace RailWaySystem.Controllers
 {
@@ -12,26 +9,24 @@ namespace RailWaySystem.Controllers
     [Route("[controller]")]
     public class TravelController : ControllerBase
     {
-        private readonly TravelContext _context; // Inject TravelContext via constructor
+        private readonly ITravelService _service;
 
-        public TravelController(TravelContext context)
+        public TravelController(ITravelService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet("{origin}/{destination}")]
         public async Task<ActionResult<Travel[]>> Get(string origin, string destination)
         {
-            var travels = await _context.Travels
-                .Where(t => t.Origin == origin && t.Destination == destination)
-                .ToArrayAsync();
+            var travels = await _service.GetTravelsAsync(origin, destination);
 
-            if (travels == null || travels.Length == 0)
+            if (travels == null || !travels.Any())
             {
-                return NotFound(); 
+                return NotFound();
             }
 
-            return travels;
+            return Ok(travels);
         }
     }
 }

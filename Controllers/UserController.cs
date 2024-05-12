@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RailWaySystem.Data;
-using RailWaySystem.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
+using RailWaySystem.Models;
+using RailWaySystem.Interfaces;
 
 namespace RailWaySystem.Controllers
 {
@@ -12,25 +10,31 @@ namespace RailWaySystem.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserContext _context;
+        private readonly IUserService _service;
 
-        public UserController(UserContext context)
+        public UserController(IUserService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        [HttpGet("{userid}/{pass}")]
-public async Task<ActionResult<User>> Get(string userid, string pass)
-{
-    var user = await _context.Users
-        .FirstOrDefaultAsync(t => t.UserId == userid && t.Password == pass);
+        [HttpGet("{userId}/{pass}")]
+        public async Task<ActionResult<User>> Get(string userId, string pass)
+        {
+            try
+            {
+                var user = await _service.AuthenticateUserAsync(userId, pass);
 
-    if(user == null)
-    {
-        return Unauthorized("Invalid credentials");
-    }
+                if (user == null)
+                {
+                    return Unauthorized("Invalid credentials");
+                }
 
-    return Ok(user);
-}
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
     }
 }
